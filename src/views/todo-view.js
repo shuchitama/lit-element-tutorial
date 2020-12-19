@@ -30,7 +30,41 @@ class TodoView extends LitElement {
 		this.task = "";
 	}
 	render() {
-		return html`<p>Hello world</p> `;
+		return html`
+			<div class="input-layout" @keyup="${this.shortcutListener}">
+				<vaadin-text-field
+					placeholder="Task"
+					value="${this.task}"
+					@change="${this.updateTask}"
+				></vaadin-text-field>
+				<vaadin-button theme="primary" @click="${this.addTodo}">
+					Add Todo
+				</vaadin-button>
+			</div>
+		`;
+	}
+
+	shortcutListener(e) {
+		if (e.key === "Enter") {
+			this.addTodo();
+		}
+	}
+
+	updateTask(e) {
+		this.task = e.target.value;
+	}
+
+	addTodo() {
+		if (this.task) {
+			this.todos = [
+				...this.todos,
+				{
+					task: this.task,
+					complete: false,
+				},
+			];
+			this.task = "";
+		}
 	}
 }
 
