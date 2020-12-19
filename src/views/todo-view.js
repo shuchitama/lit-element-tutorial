@@ -41,6 +41,22 @@ class TodoView extends LitElement {
 					Add Todo
 				</vaadin-button>
 			</div>
+
+			<div class="todos-list">
+				${this.todos.map(
+					(todo) => html`
+						<div class="todo-item">
+							<vaadin-checkbox
+								?checked="${todo.complete}"
+								@change="${(e) =>
+									this.updateTodoStatus(todo, e.target.checked)}"
+							>
+								${todo.task}
+							</vaadin-checkbox>
+						</div>
+					`
+				)}
+			</div>
 		`;
 	}
 
@@ -65,6 +81,12 @@ class TodoView extends LitElement {
 			];
 			this.task = "";
 		}
+	}
+
+	updateTodoStatus(updatedTodo, complete) {
+		this.todos = this.todos.map((todo) =>
+			updatedTodo === todo ? { updatedTodo, complete } : todo
+		);
 	}
 }
 
