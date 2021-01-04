@@ -4,7 +4,10 @@ import "@vaadin/vaadin-button";
 import "@vaadin/vaadin-checkbox";
 import "@vaadin/vaadin-radio-button/vaadin-radio-button";
 import "@vaadin/vaadin-radio-button/vaadin-radio-group";
-import { VisibilityFilters } from "../redux/reducer.js";
+import {
+	getVisibleTodosSelector,
+	VisibilityFilters,
+} from "../redux/reducer.js";
 import { connect } from "pwa-helpers";
 import { store } from "../redux/store.js";
 import {
@@ -25,7 +28,7 @@ class TodoView extends connect(store)(LitElement) {
 	}
 
 	stateChanged(state) {
-		this.todos = state.todos;
+		this.todos = getVisibleTodosSelector(state);
 		this.filter = state.filter;
 	}
 
@@ -64,7 +67,7 @@ class TodoView extends connect(store)(LitElement) {
 			</div>
 
 			<div class="todos-list">
-				${this.applyFilter(this.todos).map(
+				${this.todos.map(
 					(todo) => html`
 						<div class="todo-item">
 							<vaadin-checkbox
@@ -123,17 +126,6 @@ class TodoView extends connect(store)(LitElement) {
 
 	clearCompleted() {
 		store.dispatch(clearCompleted());
-	}
-
-	applyFilter(todos) {
-		switch (this.filter) {
-			case VisibilityFilters.SHOW_ACTIVE:
-				return todos.filter((todo) => !todo.complete);
-			case VisibilityFilters.SHOW_COMPLETED:
-				return todos.filter((todo) => todo.complete);
-			default:
-				return todos;
-		}
 	}
 
 	createRenderRoot() {
