@@ -7,6 +7,12 @@ import "@vaadin/vaadin-radio-button/vaadin-radio-group";
 import { VisibilityFilters } from "../redux/reducer.js";
 import { connect } from "pwa-helpers";
 import { store } from "../redux/store.js";
+import {
+	addTodo,
+	updateTodoStatus,
+	updateFilter,
+	clearCompleted,
+} from "../redux/actions.js";
 
 class TodoView extends connect(store)(LitElement) {
 	// static getter for properties - return definition of the property names and types
@@ -102,29 +108,21 @@ class TodoView extends connect(store)(LitElement) {
 
 	addTodo() {
 		if (this.task) {
-			this.todos = [
-				...this.todos,
-				{
-					task: this.task,
-					complete: false,
-				},
-			];
+			store.dispatch(addTodo(this.task));
 			this.task = "";
 		}
 	}
 
 	updateTodoStatus(updatedTodo, complete) {
-		this.todos = this.todos.map((todo) =>
-			updatedTodo === todo ? { updatedTodo, complete } : todo
-		);
+		store.dispatch(updateTodoStatus(updatedTodo, complete));
 	}
 
 	filterChanged(e) {
-		this.filter = e.target.value;
+		store.dispatch(updateFilter(e.detail.value));
 	}
 
 	clearCompleted() {
-		this.todos = this.todos.filter((todo) => !todo.complete);
+		store.dispatch(clearCompleted());
 	}
 
 	applyFilter(todos) {
