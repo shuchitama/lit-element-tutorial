@@ -19,7 +19,7 @@ function initRouter() {
 			action: () => import("./views/stats-view"),
 		},
 		{
-			path: "/*",
+			path: "(.*)",
 			component: "not-found-view",
 			action: () => import("./views/not-found-view"),
 		},
