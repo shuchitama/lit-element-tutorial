@@ -1,4 +1,4 @@
-import { LitElement, html } from "lit-element";
+import { html } from "lit-element";
 import "@vaadin/vaadin-text-field";
 import "@vaadin/vaadin-button";
 import "@vaadin/vaadin-checkbox";
