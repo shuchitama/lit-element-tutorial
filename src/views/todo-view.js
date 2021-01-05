@@ -16,8 +16,9 @@ import {
 	updateFilter,
 	clearCompleted,
 } from "../redux/actions.js";
+import { BaseView } from "./base-view.js";
 
-class TodoView extends connect(store)(LitElement) {
+class TodoView extends connect(store)(BaseView) {
 	// static getter for properties - return definition of the property names and types
 	static get properties() {
 		return {
@@ -126,10 +127,6 @@ class TodoView extends connect(store)(LitElement) {
 
 	clearCompleted() {
 		store.dispatch(clearCompleted());
-	}
-
-	createRenderRoot() {
-		return this;
 	}
 }
 
