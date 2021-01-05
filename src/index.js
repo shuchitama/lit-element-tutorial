@@ -16,12 +16,12 @@ function initRouter() {
 		{
 			path: "/stats",
 			component: "stats-view",
-			action: () => import(".views/stats-view"),
+			action: () => import("./views/stats-view"),
 		},
 		{
 			path: "/*",
 			component: "not-found-view",
-			action: () => import(".views/not-found-view"),
+			action: () => import("./views/not-found-view"),
 		},
 	]);
 }
