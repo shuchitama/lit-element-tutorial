@@ -1,50 +1,12 @@
 import { html } from "lit-element";
-import { connect } from "pwa-helpers";
-import { store } from "../redux/store.js";
-import { statsSelector } from "../redux/reducer.js";
-import "@vaadin/vaadin-charts";
 import { BaseView } from "./base-view.js";
 
-class StatsView extends connect(store)(BaseView) {
-	static get properties() {
-		return {
-			chartConfig: { type: Object },
-		};
-	}
-
-	stateChanged(state) {
-		const stats = statsSelector(state);
-		this.chartConfig = [
-			{ name: "Completed", y: stats.completed },
-			{ name: "Active", y: stats.active },
-		];
-
-		this.hasTodos = state.todos.length > 0;
-	}
-
+class StatsView extends BaseView {
 	render() {
 		return html`
-			<style>
-				stats-view {
-					display: block;
-				}
-			</style>
-
-			${this.getChart()}
+			<h1>Another Page</h1>
+			<p>To test navigation</p>
 		`;
-	}
-	getChart() {
-		if (this.hasTodos) {
-			return html`
-				<vaadin-chart type="pie">
-					<vaadin-chart-series
-						.values="${this.chartConfig}"
-					></vaadin-chart-series>
-				</vaadin-chart>
-			`;
-		} else {
-			return html` <p>Nothing to do! 🌴🍻☀️</p> `;
-		}
 	}
 }
 
